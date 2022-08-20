@@ -91,4 +91,9 @@ public class Review implements Serializable {
 		return Objects.equals(id, other.id);
 	}
 
+	@Override
+	public String toString() {
+		return "Review [text=" + text + ", movie=" + movie + "]";
+	}
+
 }

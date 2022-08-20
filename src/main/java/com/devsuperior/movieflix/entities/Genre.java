@@ -12,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
 @Entity
 @Table(name = "tb_genre")
 public class Genre implements Serializable {
@@ -23,6 +26,7 @@ public class Genre implements Serializable {
 	private String name;
 
 	@OneToMany(mappedBy = "genre")
+	@JsonIgnore
 	private Set<Movie> movies = new HashSet<>();
 
 	public Genre() {

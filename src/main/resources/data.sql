@@ -16,3 +16,4 @@ INSERT INTO tb_movie (title, sub_Title, year, img_Url, synopsis, genre_id) VALUE
 
 INSERT INTO tb_review (text, user_id, movie_id) VALUES ('Incompatible. One of the best action movies Ive ever seen', 2, 1);
 INSERT INTO tb_review (text, user_id, movie_id) VALUES ('it is an amazing movie.', 2, 2);
+INSERT INTO tb_review (text, user_id, movie_id) VALUES ('Nice movie', 1, 2);

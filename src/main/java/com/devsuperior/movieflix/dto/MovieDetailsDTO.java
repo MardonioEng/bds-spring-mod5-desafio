@@ -1,51 +1,28 @@
-package com.devsuperior.movieflix.entities;
+package com.devsuperior.movieflix.dto;
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import com.devsuperior.movieflix.entities.Genre;
+import com.devsuperior.movieflix.entities.Movie;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
-@Entity
-@Table(name = "tb_movie")
-public class Movie implements Serializable {
+public class MovieDetailsDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String title;
 	private String subTitle;
 	private Integer year;
 	private String imgUrl;
-
-	@Column(columnDefinition = "TEXT")
 	private String synopsis;
 
-	@OneToMany(mappedBy = "movie")
-	private Set<Review> reviews = new HashSet<>();
-
-	@ManyToOne
-	@JoinColumn(name = "genre_id")
-	@Fetch(FetchMode.JOIN)
 	private Genre genre;
 
-	public Movie() {
+	public MovieDetailsDTO() {
 	}
 
-	public Movie(Long id, String title, String subTitle, Integer year, String imgUrl, String synopsis, Genre genre) {
+	public MovieDetailsDTO(Long id, String title, String subTitle, Integer year, String imgUrl, String synopsis,
+			Genre genre) {
 		this.id = id;
 		this.title = title;
 		this.subTitle = subTitle;
@@ -53,6 +30,16 @@ public class Movie implements Serializable {
 		this.imgUrl = imgUrl;
 		this.synopsis = synopsis;
 		this.genre = genre;
+	}
+
+	public MovieDetailsDTO(Movie movie) {
+		id = movie.getId();
+		title = movie.getTitle();
+		subTitle = movie.getSubTitle();
+		year = movie.getYear();
+		imgUrl = movie.getImgUrl();
+		synopsis = movie.getSynopsis();
+		genre = movie.getGenre();
 	}
 
 	public Long getId() {
@@ -103,10 +90,6 @@ public class Movie implements Serializable {
 		this.synopsis = synopsis;
 	}
 
-	public Set<Review> getReviews() {
-		return reviews;
-	}
-
 	public Genre getGenre() {
 		return genre;
 	}
@@ -128,7 +111,7 @@ public class Movie implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Movie other = (Movie) obj;
+		MovieDetailsDTO other = (MovieDetailsDTO) obj;
 		return Objects.equals(id, other.id);
 	}
 
