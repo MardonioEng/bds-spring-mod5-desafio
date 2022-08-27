@@ -3,33 +3,48 @@ package com.devsuperior.movieflix.dto;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.validation.constraints.NotBlank;
+
 import com.devsuperior.movieflix.entities.Review;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ReviewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private String nameUser;
+	private Long id;
+	
+	@NotBlank(message = "Campo requerido")
 	private String text;
+	
+	private Long movieId;
+	
+	@JsonProperty("user")
+	private UserDTO user;
 
 	public ReviewDTO() {
 	}
 
-	public ReviewDTO(String nameUser, String text) {
-		this.nameUser = nameUser;
+	public ReviewDTO(Long id, String text, Long movieId, UserDTO userDTO) {
+		this.id = id;
 		this.text = text;
+		this.movieId = movieId;
+		this.user = userDTO;
 	}
 	
 	public ReviewDTO(Review review) {
-		nameUser = review.getUser().getName();
+		id = review.getId();
 		text = review.getText();
+		movieId = review.getMovie().getId();
+		user = new UserDTO(review.getUser());
+	}
+	 
+
+	public Long getId() {
+		return id;
 	}
 
-	public String getNameUser() {
-		return nameUser;
-	}
-
-	public void setNameUser(String nameUser) {
-		this.nameUser = nameUser;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getText() {
@@ -40,9 +55,27 @@ public class ReviewDTO implements Serializable {
 		this.text = text;
 	}
 
+	public Long getMovieId() {
+		return movieId;
+	}
+
+	public void setMovieId(Long movieId) {
+		this.movieId = movieId;
+	}
+
+	@JsonProperty("user")
+	public UserDTO getUserDTO() {
+		return user;
+	}
+
+	@JsonProperty("user")
+	public void setUserDTO(UserDTO userDTO) {
+		this.user = userDTO;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(nameUser);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -54,7 +87,7 @@ public class ReviewDTO implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		ReviewDTO other = (ReviewDTO) obj;
-		return Objects.equals(nameUser, other.nameUser);
+		return Objects.equals(id, other.id);
 	}
 
 }

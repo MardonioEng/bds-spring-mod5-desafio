@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.devsuperior.movieflix.dto.MovieDTO;
 import com.devsuperior.movieflix.dto.MovieDetailsDTO;
-import com.devsuperior.movieflix.dto.MovieReviewDTO;
+import com.devsuperior.movieflix.dto.ReviewDTO;
 import com.devsuperior.movieflix.entities.Genre;
 import com.devsuperior.movieflix.entities.Movie;
 import com.devsuperior.movieflix.entities.Review;
@@ -47,13 +47,13 @@ public class MovieService {
 		return new MovieDetailsDTO(movie);
 	}
 	
-	public List<MovieReviewDTO> findAllReviewsMovie(Long movieId) {
+	public List<ReviewDTO> findAllReviewsMovie(Long movieId) {
 		Optional<Movie> obj = Optional.ofNullable(movieRepository.getOne(movieId));
 		Movie movie = obj.orElseThrow(() -> new ResourceNotFoundException("Filme não encontrado!"));
 		
 		List<Review> reviewList = reviewRepository.findAllByMovieId(movie.getId());
 		
-		return reviewList.stream().map(review -> new MovieReviewDTO(review)).collect(Collectors.toList());
+		return reviewList.stream().map(review -> new ReviewDTO(review)).collect(Collectors.toList());
 	}
 
 }

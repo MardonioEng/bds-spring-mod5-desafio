@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.devsuperior.movieflix.dto.MovieReviewDTO;
+import com.devsuperior.movieflix.dto.ReviewDTO;
 import com.devsuperior.movieflix.services.ReviewService;
 
 @RequestMapping("/reviews")
@@ -23,7 +23,7 @@ public class ReviewResource {
 	private ReviewService reviewService;
 	
 	@PostMapping
-	public ResponseEntity<MovieReviewDTO> insert(@RequestBody @Valid MovieReviewDTO dto) {
+	public ResponseEntity<ReviewDTO> insert(@RequestBody @Valid ReviewDTO dto) {
 		dto = reviewService.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(dto.getId()).toUri();
